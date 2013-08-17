@@ -303,7 +303,7 @@
 				+ prefixTheClassName("column") + " "
 				+ '" style="width:100%; float: ' + options.columnFloat + '"></div>')); //"
 			var $col = $inBox.children().eq($inBox.children().length-1);
-			$destroyable = $cache.clone(true);
+			var $destroyable = $cache.clone(true);
 			if(options.overflow){
 				targetHeight = options.overflow.height;
 				columnize($col, $destroyable, $col, targetHeight);
