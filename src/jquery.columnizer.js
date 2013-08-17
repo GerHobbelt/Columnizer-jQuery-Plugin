@@ -42,7 +42,7 @@
 	};
 	options = $.extend(defaults, options);
 
-	if(typeof(options.width) == "string"){
+	if(typeof(options.width) === "string"){
 		options.width = parseInt(options.width,10);
 		if(isNaN(options.width)){
 			options.width = defaults.width;
@@ -57,7 +57,7 @@
 		var columnizing = false;
 		var manualBreaks = options.manualBreaks;
 		var cssClassPrefix = defaults.cssClassPrefix;
-		if(typeof(options.cssClassPrefix) == "string"){
+		if(typeof(options.cssClassPrefix) === "string"){
 			cssClassPrefix = options.cssClassPrefix;
 		}
 
@@ -161,7 +161,7 @@
 
 			// now lets try to split that last node
 			// to fit as much of it as we can into this column
-			if($item[0].nodeType == 3){
+			if($item[0].nodeType === 3){
 				// it's a text node, split it up
 				var oText = $item[0].nodeValue;
 				var counter2 = options.width / 18;
@@ -171,7 +171,7 @@
 				var latestTextNode = null;
 				while($parentColumn.height() < targetHeight && oText.length){
 					var indexOfSpace = oText.indexOf(' ', counter2);
-					if (indexOfSpace != -1) {
+					if (indexOfSpace !== -1) {
 						columnText = oText.substring(0, oText.indexOf(' ', counter2));
 					} else {
 						columnText = oText;
@@ -179,7 +179,7 @@
 					latestTextNode = document.createTextNode(columnText);
 					$putInHere.append(latestTextNode);
 
-					if(oText.length > counter2 && indexOfSpace != -1){
+					if(oText.length > counter2 && indexOfSpace !== -1){
 						oText = oText.substring(indexOfSpace);
 					}else{
 						oText = "";
@@ -203,7 +203,7 @@
 				$pullOutHere.append($item);
 			}
 
-			return $item[0].nodeType == 3;
+			return $item[0].nodeType === 3;
 		}
 
 		/**
@@ -225,7 +225,7 @@
 				var $cloneMe = $pullOutHere.contents(":first");
 				//
 				// make sure we're splitting an element
-				if($cloneMe.get(0).nodeType != 1) { return; }
+				if($cloneMe.get(0).nodeType !== 1) { return; }
 
 				//
 				// clone the node with all data and events
@@ -243,7 +243,7 @@
 					// keep adding until we hit a manual break
 					$putInHere.append($clone);
 					$cloneMe.remove();
-				}else if($clone.get(0).nodeType == 1 && !$clone.hasClass(prefixTheClassName("dontend"))){
+				}else if($clone.get(0).nodeType === 1 && !$clone.hasClass(prefixTheClassName("dontend"))){
 					$putInHere.append($clone);
 					if($clone.is("img") && $parentColumn.height() < targetHeight + 20){
 						//
@@ -290,7 +290,7 @@
 
 
 		function singleColumnizeIt() {
-			if ($inBox.data("columnized") && $inBox.children().length == 1) {
+			if ($inBox.data("columnized") && $inBox.children().length === 1) {
 				return;
 			}
 			$inBox.data("columnized", true);
@@ -353,7 +353,7 @@
 		 * returns false otherwise
 		 */
 		function checkDontEndColumn(dom){
-			if(dom.nodeType == 3){
+			if(dom.nodeType === 3){
 				// text node. ensure that the text
 				// is not 100% whitespace
 				if(/^\s+$/.test(dom.nodeValue)){
@@ -361,12 +361,12 @@
 						// ok, it's 100% whitespace,
 						// so we should return checkDontEndColumn
 						// of the inputs previousSibling
-						if(!dom.previousSibling) return false;
+						if(!dom.previousSibling) { return false; }
 					return checkDontEndColumn(dom.previousSibling);
 				}
 				return false;
 			}
-			if(dom.nodeType != 1) { return false; }
+			if(dom.nodeType !== 1) { return false; }
 			if($(dom).hasClass(prefixTheClassName("dontend"))) { return true; }
 			if(dom.childNodes.length === 0) { return false; }
 			return checkDontEndColumn(dom.childNodes[dom.childNodes.length-1]);
@@ -375,7 +375,7 @@
 		function columnizeIt() {
 			//reset adjustment var
 			adjustment = 0;
-			if(lastWidth == $inBox.width()) { return; }
+			if(lastWidth === $inBox.width()) { return; }
 			lastWidth = $inBox.width();
 
 			var numCols = Math.round($inBox.width() / options.width);
@@ -440,7 +440,7 @@
 					/* create column */
 					className = (i === 0) ? prefixTheClassName("first") : "";
 					className += " " + prefixTheClassName("column");
-					className = (i == numCols - 1) ? (prefixTheClassName("last") + " " + className) : className;
+					className = (i === numCols - 1) ? (prefixTheClassName("last") + " " + className) : className;
 					$inBox.append($("<div class='" + className + "' style='width:" + (Math.floor(100 / numCols))+ "%; float: " + options.columnFloat + ";'></div>")); //"
 				}
 
@@ -484,7 +484,7 @@
 						// to fix, lets put 1 item from destroyable into the empty column
 						// before we iterate
 						$col.append($destroyable.contents(":first"));
-					}else if(i == numCols - (options.overflow ? 0 : 1) && !options.overflow){
+					}else if(i === numCols - (options.overflow ? 0 : 1) && !options.overflow){
 						//
 						// ok, we're about to exit the while loop because we're done with all
 						// columns except the last column.
@@ -499,7 +499,7 @@
 				}
 				if(options.overflow && !scrollHorizontally){
 					var IE6 = false /*@cc_on || @_jscript_version < 5.7 @*/;
-					var IE7 = (document.all) && (navigator.appVersion.indexOf("MSIE 7.") != -1);
+					var IE7 = (document.all) && (navigator.appVersion.indexOf("MSIE 7.") !== -1);
 					if(IE6 || IE7){
 						var html = "";
 						var div = document.createElement('DIV');
@@ -564,7 +564,7 @@
 						adjustment += 30;
 
 						targetHeight = targetHeight + 30;
-						if(loopCount == maxLoops-1) { maxLoops++; }
+						if(loopCount === maxLoops-1) { maxLoops++; }
 					}else if(max - min > 30){
 						// too much variation, try again
 						targetHeight = avgH + 30;
@@ -582,7 +582,7 @@
 						$col.width(optionWidth + "px");
 						if(i === 0){
 							$col.addClass(prefixTheClassName("first"));
-						}else if(i==$inBox.children().length-1){
+						}else if(i===$inBox.children().length-1){
 							$col.addClass(prefixTheClassName("last"));
 						}else{
 							$col.removeClass(prefixTheClassName("first"));
