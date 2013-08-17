@@ -54,7 +54,6 @@
 		var maxHeight = $(this).height();
 		var $cache = $('<div></div>'); // this is where we'll put the real content
 		var lastWidth = 0;
-		var columnizing = false;
 		var manualBreaks = options.manualBreaks;
 		var cssClassPrefix = defaults.cssClassPrefix;
 		if(typeof(options.cssClassPrefix) === "string"){
@@ -305,7 +304,7 @@
 			var $col = $inBox.children().eq($inBox.children().length-1);
 			var $destroyable = $cache.clone(true);
 			if(options.overflow){
-				targetHeight = options.overflow.height;
+				var targetHeight = options.overflow.height;
 				columnize($col, $destroyable, $col, targetHeight);
 				// make sure that the last item in the column isn't a "dontend"
 				if(!$destroyable.contents().find(":first-child").hasClass(prefixTheClassName("dontend"))){
@@ -405,7 +404,6 @@
 			$inBox.empty();
 
 			var targetHeight = maxHeight / numCols;
-			var firstTime = true;
 			var maxLoops = 3;
 			var scrollHorizontally = false;
 			if(options.overflow){
@@ -523,8 +521,6 @@
 					// the last column in the series
 					$col = $inBox.children().eq($inBox.children().length-1);
 					while($destroyable.contents().length) { $col.append($destroyable.contents(":first")); }
-					var afterH = $col.height();
-					var diff = afterH - targetHeight;
 					var totalH = 0;
 					var min = 10000000;
 					var max = 0;
