@@ -302,7 +302,7 @@
 				+ prefixTheClassName("last") + " "
 				+ prefixTheClassName("column") + " "
 				+ '" style="width:100%; float: ' + options.columnFloat + '"></div>')); //"
-			$col = $inBox.children().eq($inBox.children().length-1);
+			var $col = $inBox.children().eq($inBox.children().length-1);
 			$destroyable = $cache.clone(true);
 			if(options.overflow){
 				targetHeight = options.overflow.height;
@@ -399,7 +399,7 @@
 
 			$inBox.empty();
 			$inBox.append($('<div style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
-			$col = $inBox.children(":last");
+			var $col = $inBox.children(":last");
 			$col.append($cache.clone());
 			maxHeight = $col.height();
 			$inBox.empty();
@@ -427,7 +427,7 @@
 			// options that would cause an infinite loop, then this'll definitely stop it.
 			for(var loopCount=0;loopCount<maxLoops && loopCount<20;loopCount++){
 				$inBox.empty();
-				var $destroyable, className, $col, $lastKid;
+				var $destroyable, className, $lastKid;
 				try{
 					$destroyable = $cache.clone(true);
 				}catch(e){
@@ -441,7 +441,7 @@
 					className = (i === 0) ? prefixTheClassName("first") : "";
 					className += " " + prefixTheClassName("column");
 					className = (i === numCols - 1) ? (prefixTheClassName("last") + " " + className) : className;
-					$inBox.append($("<div class="' + className + '" style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
+					$inBox.append($('<div class="' + className + '" style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
 				}
 
 				// fill all but the last column (unless overflowing)
