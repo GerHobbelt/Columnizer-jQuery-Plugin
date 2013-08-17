@@ -151,7 +151,7 @@
 				}
 				$putInHere.append(node);
 			}
-			if($putInHere[0].childNodes.length === 0) return;
+			if($putInHere[0].childNodes.length === 0) { return; }
 
 			// now we're too tall, so undo the last one
 			var kids = $putInHere[0].childNodes;
@@ -165,8 +165,8 @@
 				// it's a text node, split it up
 				var oText = $item[0].nodeValue;
 				var counter2 = options.width / 18;
-				if(options.accuracy)
-				counter2 = options.accuracy;
+				if(options.accuracy) {
+				counter2 = options.accuracy; }
 				var columnText;
 				var latestTextNode = null;
 				while($parentColumn.height() < targetHeight && oText.length){
@@ -225,7 +225,7 @@
 				var $cloneMe = $pullOutHere.contents(":first");
 				//
 				// make sure we're splitting an element
-				if($cloneMe.get(0).nodeType != 1) return;
+				if($cloneMe.get(0).nodeType != 1) { return; }
 
 				//
 				// clone the node with all data and events
@@ -366,22 +366,22 @@
 				}
 				return false;
 			}
-			if(dom.nodeType != 1) return false;
-			if($(dom).hasClass(prefixTheClassName("dontend"))) return true;
-			if(dom.childNodes.length === 0) return false;
+			if(dom.nodeType != 1) { return false; }
+			if($(dom).hasClass(prefixTheClassName("dontend"))) { return true; }
+			if(dom.childNodes.length === 0) { return false; }
 			return checkDontEndColumn(dom.childNodes[dom.childNodes.length-1]);
 		}
 
 		function columnizeIt() {
 			//reset adjustment var
 			adjustment = 0;
-			if(lastWidth == $inBox.width()) return;
+			if(lastWidth == $inBox.width()) { return; }
 			lastWidth = $inBox.width();
 
 			var numCols = Math.round($inBox.width() / options.width);
 			var optionWidth = options.width;
 			var optionHeight = options.height;
-			if(options.columns) numCols = options.columns;
+			if(options.columns) { numCols = options.columns; }
 			if(manualBreaks){
 				numCols = $cache.find(prefixTheClassName("columnbreak", true)).length + 1;
 				optionWidth = false;
@@ -393,7 +393,7 @@
 			if(numCols <= 1){
 				return singleColumnizeIt();
 			}
-			if($inBox.data("columnizing")) return;
+			if($inBox.data("columnizing")) { return; }
 			$inBox.data("columnized", true);
 			$inBox.data("columnizing", true);
 
@@ -522,7 +522,7 @@
 				}else if(!scrollHorizontally){
 					// the last column in the series
 					$col = $inBox.children().eq($inBox.children().length-1);
-					while($destroyable.contents().length) $col.append($destroyable.contents(":first"));
+					while($destroyable.contents().length) { $col.append($destroyable.contents(":first")); }
 					var afterH = $col.height();
 					var diff = afterH - targetHeight;
 					var totalH = 0;
@@ -541,7 +541,7 @@
 								max = h;
 								lastIsMax = true;
 							}
-							if(h < min) min = h;
+							if(h < min) { min = h; }
 							numberOfColumnsThatDontEndInAColumnBreak++;
 						}
 					};
@@ -564,7 +564,7 @@
 						adjustment += 30;
 
 						targetHeight = targetHeight + 30;
-						if(loopCount == maxLoops-1) maxLoops++;
+						if(loopCount == maxLoops-1) { maxLoops++; }
 					}else if(max - min > 30){
 						// too much variation, try again
 						targetHeight = avgH + 30;
