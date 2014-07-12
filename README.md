@@ -38,7 +38,7 @@ Columnizer will add CSS classes to the columns it creates. Each column will have
 <td style="padding-left: 10px;">true by default. If set to false, Columnizer will try to wait until images in the content have loaded before columnizing the data.</td>
 </tr>
 <tr>
-<td style="text-align: right; padding-right: 10px;"><em>float</em></td>
+<td style="text-align: right; padding-right: 10px;"><em>columnFloat</em></td>
 <td style="padding-left: 10px;">default is “left”. Change to “right” for right to left languages.</td>
 </tr>
 <tr>
@@ -48,7 +48,7 @@ Columnizer will add CSS classes to the columns it creates. Each column will have
 </tr>
 <tr>
 <td style="text-align: right; padding-right: 10px;"><em>buildOnce</em></td>
-<td style="padding-left: 10px;">if buildOnce is false, the content will be re-columnized when the window is resized. If buildOnce is false, the content will only be columnized once.</td>
+<td style="padding-left: 10px;">if buildOnce is false, the content will be re-columnized when the window is resized. If buildOnce is true, the content will only be columnized once.</td>
 </tr>
 <tr>
 <td style="text-align: right; padding-right: 10px;" rowspan="4" valign="top"><em>overflow</em></td>
