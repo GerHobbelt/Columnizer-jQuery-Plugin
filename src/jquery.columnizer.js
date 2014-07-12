@@ -1,4 +1,4 @@
-// version 1.6.0
+// version 1.6.1
 // http://welcome.totheinter.net/columnizer-jquery-plugin/
 // created by: Adam Wulf @adamwulf, adam.wulf@gmail.com
 
@@ -46,8 +46,12 @@
 		// previx for all the CSS classes used by this plugin
 		// default to empty string for backwards compatibility
 		cssClassPrefix : "",
-		elipsisText:'...',
-		debug:0,	
+		elipsisText : '...',
+		debug : 0,	
+		// if set use columnClassFunc(colNum) to set width's with custom classes instead of fixed percentiles
+		columnClassFunc: false,
+		// extra classes to add to each column wrapper
+		extraColumnClass: false
 	};
 	options = $.extend(defaults, options);
 
@@ -348,6 +352,7 @@
 				+ prefixTheClassName("first") + " "
 				+ prefixTheClassName("last") + " "
 				+ prefixTheClassName("column") + " "
+				+ options.extraColumnClass +
 				+ '" style="width:100%; float: ' + options.columnFloat + '"></div>')); //"
 			var $col = $inBox.children().eq($inBox.children().length-1);
 			var $destroyable = $cache.clone(true);
@@ -443,9 +448,12 @@
 			if($inBox.data("columnizing")) { return; }
 			$inBox.data("columnized", true);
 			$inBox.data("columnizing", true);
+			
+			var targetWidth = !options.columnClassFunc ? "width:" + (Math.floor(100 / numCols))+ "%; " : "";
+			var targetClass = options.columnClassFunc ? options.columnClassFunc(numCols) : "";
 
 			$inBox.empty();
-			$inBox.append($('<div style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
+			$inBox.append($('<div class="' + targetClass + '" style="' + targetWidth + 'float: ' + options.columnFloat + ';"></div>'));
 			var $col = $inBox.children(":last");
 			appendSafe($col, $cache.clone());
 			maxHeight = $col.height();
@@ -487,7 +495,9 @@
 					className = (i === 0) ? prefixTheClassName("first") : "";
 					className += " " + prefixTheClassName("column");
 					className = (i === numCols - 1) ? (prefixTheClassName("last") + " " + className) : className;
-					$inBox.append($('<div class="' + className + '" style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
+					className += options.extraColumnClass ? " " + options.extraColumnClass : "";
+					className += options.columnClassFunc ? " " + targetClass : "";
+					$inBox.append($('<div class="' + className + '" style="' + targetWidth + 'float: ' + options.columnFloat + ';"></div>'));
 				}
 
 				// fill all but the last column (unless overflowing)
@@ -495,7 +505,7 @@
 				while(i < numCols - (options.overflow ? 0 : 1) || scrollHorizontally && $destroyable.contents().length){
 					if($inBox.children().length <= i){
 						// we ran out of columns, make another
-						$inBox.append($('<div class="' + className + '" style="width:' + (Math.floor(100 / numCols))+ '%; float: ' + options.columnFloat + '"></div>')); //"
+						$inBox.append($('<div class="' + className + '" style="' + targetWidth + 'float: ' + options.columnFloat + ';"></div>'));
 					}
 					$col = $inBox.children().eq(i);
 					if(scrollHorizontally){
