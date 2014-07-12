@@ -36,9 +36,12 @@
 		accuracy : false,
 		// don't automatically layout columns, only use manual columnbreak
 		manualBreaks : false,
-		// previx for all the CSS classes used by this plugin
+		// prefix for all the CSS classes used by this plugin
 		// default to empty string for backwards compatibility
-		cssClassPrefix : ""
+		cssClassPrefix : "",
+                // place images in their own column if too large.
+                // works on images with class "images" appended.
+                imgarrange: false
 	};
 	options = $.extend(defaults, options);
 
@@ -71,6 +74,7 @@
 		var columnizing = false;
 		var manualBreaks = options.manualBreaks;
 		var cssClassPrefix = defaults.cssClassPrefix;
+                var imgarrange = options.imgarrange;
 		if(typeof(options.cssClassPrefix) == "string"){
 			cssClassPrefix = options.cssClassPrefix;
 		}
@@ -149,7 +153,19 @@
 			// but stop once our height is too tall
 			while((manualBreaks || $parentColumn.height() < targetHeight) &&
 				$pullOutHere[0].childNodes.length){
-				var node = $pullOutHere[0].childNodes[0];
+                                var nxnode = $pullOutHere[0].childNodes[1];
+                                var node = $pullOutHere[0].childNodes[0];
+                                if( imgarrange && $(nxnode) && $(nxnode).hasClass("images")) {
+                                        
+                                        // if next node is a large image, and you want to resize them
+                                        // to fit a column, then just break out so that it 
+                                        // gets put on a column of its own
+                                        // fixes placement uncertainty with certain mobile devices
+                                        $parentColumn.addClass("columnbreak");
+                                        $(nxnode).addClass("columnbreak");
+					return;
+                                    }
+				
 				//
 				// Because we're not cloning, jquery will actually move the element"
 				// http://welcome.totheinter.net/2009/03/19/the-undocumented-life-of-jquerys-append/
@@ -330,7 +346,7 @@
 				+ prefixTheClassName("first") + " "
 				+ prefixTheClassName("last") + " "
 				+ prefixTheClassName("column") + " "
-				+ "' style='width:100%; float: " + options.columnFloat + ";'></div>")); //"
+				+ "' style='width:100%; float: " + options.columnFloat + ";'></div>"));
 			$col = $inBox.children().eq($inBox.children().length-1);
 			$destroyable = $cache.clone(true);
 			if(options.overflow){
