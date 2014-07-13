@@ -41,6 +41,9 @@
 		// text nodes. smaller numbers will result in higher accuracy
 		// column widths, but will take slightly longer
 		accuracy : false,
+		// false to round down column widths (for compatibility)
+		// true to conserve all decimals in the column widths
+		precise : false,
 		// don't automatically layout columns, only use manual columnbreak
 		manualBreaks : false,
 		// prefix for all the CSS classes used by this plugin
@@ -72,7 +75,18 @@
 	}
 	if(options.debug) { // assert is off by default
 		this.debug=options.debug;
-	}	
+	}
+	if(!options.setWidth) {
+		if (options.precise) {
+			options.setWidth = function (numCols) {
+				return 100 / numCols;
+			};
+		} else {
+			options.setWidth = function (numCols) {
+				return Math.floor(100 / numCols);
+			};
+		}
+	}
 	
 	/**
 	 * appending a text node to a <table> will
@@ -464,7 +478,7 @@
 			$inBox.data("columnized", true);
 			$inBox.data("columnizing", true);
 			
-			var targetWidth = !options.columnClassFunc ? "width:" + (Math.floor(100 / numCols))+ "%; " : "";
+			var targetWidth = !options.columnClassFunc ? "width:" + options.setWidth(numCols) + "%; " : "";
 			var targetClass = options.columnClassFunc ? options.columnClassFunc(numCols) : "";
 
 			$inBox.empty();
@@ -494,12 +508,12 @@
 			// also, lets hard code the max loops to 20. that's /a lot/ of loops for columnizer,
 			// and should keep run aways in check. if somehow someone has content combined with
 			// options that would cause an infinite loop, then this'll definitely stop it.
-			for(var loopCount=0;loopCount<maxLoops && loopCount<20;loopCount++){
+			for(var loopCount = 0; loopCount < maxLoops && loopCount < 20; loopCount++) {
 				$inBox.empty();
 				var $destroyable, className, $lastKid;
 				try{
 					$destroyable = $cache.clone(true);
-				}catch(e){
+				} catch(e) {
 					// jquery in ie6 can't clone with true
 					$destroyable = $cache.clone();
 				}
