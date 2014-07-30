@@ -1,30 +1,31 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Using Columnizer for Page Layout</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Using Columnizer for Page Layout</title>
 
-<link rel="stylesheet" href="reset.css" type="text/css" media="screen" charset="utf-8" />
-<style type="text/css">
-.page{ width: 612px; height: 792px; border: 1px solid black; margin: 20px; position: relative; }
-.page .content .column{ text-align:justify; font-size: 10pt; }
-.page .content .column blockquote{ border-left: 2px solid #999999; background: #DEDEDE; padding: 10px; margin: 4px 20px; clear: both; }
-.page .content .column img{ float: left; margin: 10px; }
-.page .content .column p{ padding: 0 10px; margin: 10px 0; }
-.page .content .column h1{ padding: 0 10px; }
-.page .header{ text-align: center; font-size: 18pt; font-family: helvetica, arial; padding: 20px 0 0; }
-.page .header hr, .page .footer hr{ width: 400px; }
-.page .footer{ text-align: center; }
-.page .footer span{ position: absolute; bottom: 10px; right: 10px; }
-.page_template{ display: none; }
+	<link rel="stylesheet" href="reset.css" type="text/css" media="screen" charset="utf-8" />
+	<style type="text/css">
+	.page{ width: 612px; height: 792px; border: 1px solid black; margin: 20px; position: relative; }
+	.page .content .column{ text-align:justify; font-size: 10pt; }
+	.page .content .column blockquote{ border-left: 2px solid #999999; background: #DEDEDE; padding: 10px; margin: 4px 20px; clear: both; }
+	.page .content .column img{ float: left; margin: 10px; }
+	.page .content .column p{ padding: 0 10px; margin: 10px 0; }
+	.page .content .column h1{ padding: 0 10px; }
+	.page .header{ text-align: center; font-size: 18pt; font-family: helvetica, arial; padding: 20px 0 0; }
+	.page .header hr, .page .footer hr{ width: 400px; }
+	.page .footer{ text-align: center; }
+	.page .footer span{ position: absolute; bottom: 10px; right: 10px; }
+	.page_template{ display: none; }
 
-.enclosure {border:1px dashed black}	  
-</style>
+	.enclosure {border:1px dashed black}	  
+	</style>
 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/jquery.js"></script>
 	<script src="../src/jquery.columnizer.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		$(function(){
-			var content_height = 652;	// the height of the content, discluding the header/footer
+			var content_height = 652;	// the height of the content, excluding the header/footer
 			var page = 1;				// the beginning page number to show in the footer
 			function buildNewsletter(){
 				if($('#newsletterContent').contents().length > 0){
@@ -55,7 +56,7 @@
 			setTimeout(buildNewsletter, 3000);
 		});
 	</script>
-
+</head>
 <body>
 The goal of this demo is to show how to columnize super long content over multiple mulit-column "pages".
 <div class="page_template">  
