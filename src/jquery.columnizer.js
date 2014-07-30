@@ -106,7 +106,7 @@
 		var $inBox = options.target ? $(options.target) : $(this);
 		var maxHeight = $(this).height();
 		var $cache = $('<div></div>'); // this is where we'll put the real content
-		var lastWidth = 0;
+		var lastWidth = -1;
 		var manualBreaks = options.manualBreaks;
 		var cssClassPrefix = defaults.cssClassPrefix;
         var imgarrange = options.imgarrange;
@@ -143,7 +143,7 @@
 			}
 		}
 
-		$inBox.empty();
+		//$inBox.empty();
 
 		columnizeIt();
 
@@ -454,6 +454,10 @@
 		}
 
 		function columnizeIt() {
+            // don't attempt anything when the stuff isn't visible: we want to keep the content intact at all times.
+            if (!$inBox.is(':visible')) {
+                return;
+            }
 			//reset adjustment var
 			adjustment = 0;
 			if(lastWidth === $inBox.width()) { return; }
