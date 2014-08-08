@@ -2,9 +2,38 @@
 // http://welcome.totheinter.net/columnizer-jquery-plugin/
 // created by: Adam Wulf @adamwulf, adam.wulf@gmail.com
 
-(function($){
+(function ( window, factory ) {
 
- $.fn.columnize = function(options) {
+    if ( typeof module === 'object' && typeof module.exports === 'object' ) {
+        // Expose a factory as module.exports in loaders that implement the Node
+        // module pattern (includingbrowserify).
+        // This accentuates the need for a real window in the environment
+        // e.g. var jQuery = require('jquery')(window);
+        module.exports = function( w ) {
+            w = w || window;
+            if ( !w.document ) {
+                throw new Error('jQuery.Columnizer requires a window with a document');
+            }
+            return factory( w, w.document, require('jquery') );
+        };
+    } else {
+        if ( typeof define === 'function' && define.amd ) {
+            // AMD. Register as a named module.
+            define( ['jquery'], function (jQuery) {
+                return factory(window, document, jQuery);
+            });
+        } else {
+            // Browser globals
+            factory(window, document, jQuery);
+        }
+    }
+
+// Pass this, window may not be defined yet
+}(this, function ( window, document, $, undefined ) {
+
+    'use strict';
+
+$.fn.columnize = function(options) {
 	this.cols  =[]; 
 	this.offset= 0; 
 	this.before=[];
@@ -899,4 +928,7 @@ $.fn.renumberByJS=function($searchTag, $colno, $targetId, $targetClass ) {
 	return 0;
 };
 
-})(jQuery);
+    return $;
+
+}));
+
